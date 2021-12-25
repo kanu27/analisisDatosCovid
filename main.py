@@ -1,13 +1,11 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import re
-import json
 
 
 def getData():
     dataCsv = pd.read_csv(
-        "data/country_vaccinations.csv",
+        "data/csv/country_vaccinations.csv",
         usecols=["country", "iso_code", "date", "total_vaccinations", "people_vaccinated", "people_fully_vaccinated", "daily_vaccinations_raw", "daily_vaccinations",
                  "total_vaccinations_per_hundred", "people_vaccinated_per_hundred", "people_fully_vaccinated_per_hundred", "daily_vaccinations_per_million", "vaccines"],
         parse_dates=["date"],
@@ -88,5 +86,7 @@ def CanVacunChArBr():
     pass
 
 dfData = getData()
-
+personVacunXPais()
+personVacunEnChile()
+TipoDeVacunas()
 plt.show()

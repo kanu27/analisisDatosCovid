@@ -18,9 +18,9 @@ def getData():
     dataCsv = dataCsv.fillna(0)
     dfCovid = pd.DataFrame(data=dataCsv)
     return dfCovid
-
-def personasVacunadasXPais():
-    # Cantidad personas vacunadas por pais
+ 
+# 1 Cantidad de personas vacunadas a la fecha para cada país, ordenados de menor a mayor (people_vaccinated) (1.5 pt.)
+def personVacunXPais():
     fig = plt.figure()
     ax1 = fig.add_subplot(1, 1, 1)
     dataMundial = dfData[dfData["date"] == "2021-12-05"]
@@ -31,9 +31,8 @@ def personasVacunadasXPais():
     plt.xlabel('Pais', fontsize=14)
     plt.ylabel('cantidad de vacunados', fontsize=14)
 
-
-def personasVacunadasEnChile():
-    # Cantidad personas vacunadas de chile por fecha
+# 2 Cantidad de vacunas diarias en Chile, desde la primera fecha hasta la última (daily_vaccinations_raw) (2.0 pt.)
+def personVacunEnChile():
     fig1 = plt.figure()
     ax2 = fig1.add_subplot(1, 1, 1)
     dataChile = dfData[dfData["country"] == "Chile"]
@@ -41,7 +40,6 @@ def personasVacunadasEnChile():
     plt.title("Cantidad de vacunas diarias en Chile", fontsize=20, color="b")
     plt.ylabel('cantidad de vacunados', fontsize=14)
     plt.xlabel('Tiempo', fontsize=14)
-
 
 # 3 Mostrar porcentualmente y en bruto (en un mismo gráfico) el porcentaje/cantidad de tipos de vacuna (vaccines) (2.5 pt.)
 def porcentajeValor(pct, todosLosValores): 
@@ -81,6 +79,14 @@ def TipoDeVacunas():
     plt.setp(autotexts, size=8, weight="bold")
     ax.set_title("Vacunas presentes paises")
 
+#4 Cantidad de días que ha durado el proceso de vacunación para cada país (date) (2.0 pt.)
+def CantDeDiasXPais():
+    pass
+
+#5 Cantidad de vacunados diarios para los países: Chile, Argentina y Brasil en un mismo gráfico (daily_vaccinations_raw) (2.0 pt.) 
+def CanVacunChArBr():
+    pass
+
 dfData = getData()
-TipoDeVacunas()
+
 plt.show()

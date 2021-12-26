@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 def getData():
     dataCsv = pd.read_csv(
         "data/csv/country_vaccinations.csv",
@@ -68,12 +67,10 @@ def TipoDeVacunas():
                                       shadow=True,
                                       startangle=90,
                                       textprops=dict(color="white"))
-
     ax.legend(wedges, listaKeys,
               title="Tipos de Vacunas",
               loc="center left",
               bbox_to_anchor=(1, 0, 0.5, 1))
-
     plt.setp(autotexts, size=8, weight="bold")
     ax.set_title("Vacunas presentes paises")
 
@@ -94,11 +91,23 @@ def CantDeDiasXPais():
     
 #5 Cantidad de vacunados diarios para los países: Chile, Argentina y Brasil en un mismo gráfico (daily_vaccinations_raw) (2.0 pt.) 
 def CanVacunChArBr():
-    pass
+    dataChile = dfData[dfData["country"] == "Chile"]
+    dataArgentina = dfData[dfData["country"] == "Argentina"]
+    dataBrazil = dfData[dfData["country"] == "Brazil"]
+    fig5 = plt.figure()
+    ax5 = fig5.add_subplot(2, 1, 1)
+    plt.plot(dataChile['date'],dataChile['daily_vaccinations_raw'],color="r", label="Chile")
+    plt.plot(dataArgentina['date'],dataArgentina['daily_vaccinations_raw'],color="b",label="Argentina")
+    plt.plot(dataBrazil['date'],dataBrazil['daily_vaccinations_raw'],color="g",label="Brazil")
+    plt.legend(loc="best", facecolor="w", fontsize=16)
+    plt.ylabel('Cantidad de Vacunado', fontsize=14)
+    plt.xlabel('Tiempo', fontsize=14)   
+    plt.title("Vacunados Diarios segun Pais", fontsize=20, color="b")
 
 dfData = getData()
 #personVacunXPais()
 #personVacunEnChile()
 #TipoDeVacunas()
-CantDeDiasXPais()
+#CantDeDiasXPais()
+CanVacunChArBr()
 plt.show()

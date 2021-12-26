@@ -88,7 +88,6 @@ def CantDeDiasXPais():
         fechaList.append(int(diff.split(' ')[0]))
     df = pd.DataFrame(list(zip(paisList,fechaList)), columns = ['Pais','CantDias'])
     plt.barh(df['Pais'],df['CantDias'])
-    #plt.xticks(rotation=90)
     plt.title("Duracion del proceso de vacunacion", fontsize=20, color="b")
     plt.ylabel('Pais', fontsize=14)
     plt.xlabel('cantidad de dias', fontsize=14)    

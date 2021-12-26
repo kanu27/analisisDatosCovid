@@ -78,15 +78,28 @@ def TipoDeVacunas():
     ax.set_title("Vacunas presentes paises")
 
 #4 Cantidad de días que ha durado el proceso de vacunación para cada país (date) (2.0 pt.)
-def CantDeDiasXPais():
-    pass
-
+def CantDeDiasXPais():    
+    vacunasPorPais = dfData.groupby(['country'])
+    fechaList = list()
+    paisList = list()
+    for a in vacunasPorPais:
+        paisList.append(a[0])
+        diff = str(a[1]['date'][len(a[1]['date'])-1] - a[1]['date'][0])
+        fechaList.append(int(diff.split(' ')[0]))
+    df = pd.DataFrame(list(zip(paisList,fechaList)), columns = ['Pais','CantDias'])
+    plt.barh(df['Pais'],df['CantDias'])
+    #plt.xticks(rotation=90)
+    plt.title("Duracion del proceso de vacunacion", fontsize=20, color="b")
+    plt.ylabel('Pais', fontsize=14)
+    plt.xlabel('cantidad de dias', fontsize=14)    
+    
 #5 Cantidad de vacunados diarios para los países: Chile, Argentina y Brasil en un mismo gráfico (daily_vaccinations_raw) (2.0 pt.) 
 def CanVacunChArBr():
     pass
 
 dfData = getData()
-personVacunXPais()
-personVacunEnChile()
-TipoDeVacunas()
+#personVacunXPais()
+#personVacunEnChile()
+#TipoDeVacunas()
+CantDeDiasXPais()
 plt.show()

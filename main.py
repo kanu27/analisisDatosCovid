@@ -19,21 +19,21 @@ def getData():
 # 1 Cantidad de personas vacunadas a la fecha para cada país, ordenados de menor a mayor (people_vaccinated) (1.5 pt.)
 def personVacunXPais():
     fig = plt.figure()
-    ax1 = fig.add_subplot(1, 1, 1)
+    ax = fig.add_subplot(1, 1, 1)
     dataMundial = dfData[dfData["date"] == "2021-12-05"]
     dfPaisesSort = dataMundial.sort_values("people_vaccinated", ascending=True)
-    ax1.bar(dfPaisesSort["country"], dfPaisesSort["people_vaccinated"])
+    ax.bar(dfPaisesSort["country"], dfPaisesSort["people_vaccinated"])
     plt.xticks(rotation=90)
-    plt.title("Cantidad de vacunas diarias en Chile", fontsize=20, color="b")
+    plt.title("Cantidad de personas vacunadas a la fecha para cada país", fontsize=20, color="b")
     plt.xlabel('Pais', fontsize=14)
     plt.ylabel('cantidad de vacunados', fontsize=14)
 
 # 2 Cantidad de vacunas diarias en Chile, desde la primera fecha hasta la última (daily_vaccinations_raw) (2.0 pt.)
 def personVacunEnChile():
     fig1 = plt.figure()
-    ax2 = fig1.add_subplot(1, 1, 1)
+    ax1 = fig1.add_subplot(1, 1, 1)
     dataChile = dfData[dfData["country"] == "Chile"]
-    ax2.plot(dataChile["date"], dataChile["daily_vaccinations_raw"])
+    ax1.plot(dataChile["date"], dataChile["daily_vaccinations_raw"])
     plt.title("Cantidad de vacunas diarias en Chile", fontsize=20, color="b")
     plt.ylabel('cantidad de vacunados', fontsize=14)
     plt.xlabel('Tiempo', fontsize=14)
@@ -60,22 +60,24 @@ def TipoDeVacunas():
     for key in vacunasDict:
         listaKeys.append(key)
         listaData.append(vacunasDict[key])
-    fig, ax = plt.subplots()
-    wedges, texts, autotexts = ax.pie(listaData,
+    fig3, ax3 = plt.subplots()
+    wedges, texts, autotexts = ax3.pie(listaData,
                                       autopct=lambda pct: porcentajeValor(pct, listaData),
                                       labels=listaKeys,
                                       shadow=True,
                                       startangle=90,
                                       textprops=dict(color="white"))
-    ax.legend(wedges, listaKeys,
+    ax3.legend(wedges, listaKeys,
               title="Tipos de Vacunas",
               loc="center left",
               bbox_to_anchor=(1, 0, 0.5, 1))
     plt.setp(autotexts, size=8, weight="bold")
-    ax.set_title("Vacunas presentes paises")
+    ax3.set_title("Vacunas presentes paises")
 
 #4 Cantidad de días que ha durado el proceso de vacunación para cada país (date) (2.0 pt.)
 def CantDeDiasXPais():    
+    fig4 = plt.figure()
+    ax4 = fig4.add_subplot(1, 1, 1)
     vacunasPorPais = dfData.groupby(['country'])
     fechaList = list()
     paisList = list()
@@ -84,7 +86,7 @@ def CantDeDiasXPais():
         diff = str(a[1]['date'][len(a[1]['date'])-1] - a[1]['date'][0])
         fechaList.append(int(diff.split(' ')[0]))
     df = pd.DataFrame(list(zip(paisList,fechaList)), columns = ['Pais','CantDias'])
-    plt.barh(df['Pais'],df['CantDias'])
+    ax4.barh(df['Pais'],df['CantDias'])
     plt.title("Duracion del proceso de vacunacion", fontsize=20, color="b")
     plt.ylabel('Pais', fontsize=14)
     plt.xlabel('cantidad de dias', fontsize=14)    
@@ -95,8 +97,8 @@ def CanVacunChArBr():
     dataArgentina = dfData[dfData["country"] == "Argentina"]
     dataBrazil = dfData[dfData["country"] == "Brazil"]
     fig5 = plt.figure()
-    ax5 = fig5.add_subplot(2, 1, 1)
-    plt.plot(dataChile['date'],dataChile['daily_vaccinations_raw'],color="r", label="Chile")
+    ax5 = fig5.add_subplot(1, 1, 1)
+    ax5.plot(dataChile['date'],dataChile['daily_vaccinations_raw'],color="r", label="Chile")
     plt.plot(dataArgentina['date'],dataArgentina['daily_vaccinations_raw'],color="b",label="Argentina")
     plt.plot(dataBrazil['date'],dataBrazil['daily_vaccinations_raw'],color="g",label="Brazil")
     plt.legend(loc="best", facecolor="w", fontsize=16)
@@ -105,9 +107,9 @@ def CanVacunChArBr():
     plt.title("Vacunados Diarios segun Pais", fontsize=20, color="b")
 
 dfData = getData()
-#personVacunXPais()
-#personVacunEnChile()
-#TipoDeVacunas()
-#CantDeDiasXPais()
+personVacunXPais()
+personVacunEnChile()
+TipoDeVacunas()
+CantDeDiasXPais()
 CanVacunChArBr()
 plt.show()
